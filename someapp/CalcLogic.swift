@@ -7,22 +7,64 @@
 
 import Foundation
 struct CalcLogic{
-    var number:Float;
+    private var number:Float = 0;
     var strNumber:String = "0";
-    var strTypedNum:String;
+    private var strPrevNumber:String="0";
+    var strtypedDigit:String="";
+    var operation:String = "";
     
-    mutating func countNumbers(typedNum:Int) -> Void{
-        strTypedNum=String(typedNum);
-        if(strNumber == "0" && typedNum > 0){
+    mutating func addDigits(typedDigit:String) -> Void{
+            if(strNumber == "0" && ((typedDigit != "." ) || (typedDigit != "0" ))){
             
-            strNumber = strTypedNum;
+            strNumber = typedDigit;
         }
         else if(strNumber != "0"){
-            strNumber += strTypedNum;
+            strNumber += typedDigit;
+        }
+        else if (strNumber.contains(".")){
+            strNumber += "";
+            
         }
         else{
             strNumber="0"
         }
+        
+    }
+    mutating func getOperation(sign:String){
+        strPrevNumber=strNumber;
+        strNumber="0";
+        operation = sign;
+        
+    }
+    mutating func result(){
+        switch operation {
+            //logic for adding two numbers
+        case "+": number = Float(strNumber)! + Float(strPrevNumber)!;
+            strNumber = String(number);
+            operation = "";
+            //logic for substraction
+        case "-": number = Float(strPrevNumber)! - Float(strNumber)!;
+            strNumber = String(number);
+            operation = ""
+            //logic for division
+        case "/": number = Float(strPrevNumber)! / Float(strNumber)!;
+            strNumber = String(number);
+            operation = ""
+            //logic for multiplication
+        case "X": number =  Float(strNumber)! * Float(strPrevNumber)!;
+            strNumber = String(number);
+            operation = "";
+           //logic for clearing calculation
+        case "C": strPrevNumber = "0";
+            strNumber = "0";
+            operation = "";
+                    
+            
+        default:
+            strNumber = strPrevNumber;
+        }
+        
+            
         
     }
     
