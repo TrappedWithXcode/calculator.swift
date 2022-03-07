@@ -13,7 +13,7 @@ struct CalcLogic{
     var strtypedDigit:String="";
     var operation:String = "";
     
-    mutating func addDigits(typedDigit:String) -> Void{
+   mutating func addDigits(typedDigit:String) -> Void{
             if(strNumber == "0" && ((typedDigit != "." ) || (typedDigit != "0" ))){
             
             strNumber = typedDigit;
@@ -30,13 +30,13 @@ struct CalcLogic{
         }
         
     }
-    mutating func getOperation(sign:String){
+   mutating func getOperation(sign:String){
         strPrevNumber=strNumber;
         strNumber="0";
         operation = sign;
         
     }
-    mutating func result(){
+   mutating func result(){
         switch operation {
             //logic for adding two numbers
         case "+": number = Float(strNumber)! + Float(strPrevNumber)!;

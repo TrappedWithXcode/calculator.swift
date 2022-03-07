@@ -12,6 +12,26 @@ var prevValue:Float = value
 
 struct ContentView: View {
     @State var a = CalcLogic()
+    fileprivate func digitButton(value:String) -> some View {
+        return Button(action: {a.addDigits(typedDigit: value)}){
+            Text(value)
+        }
+        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
+    }
+    
+    fileprivate func operatorButton(sign:String) -> some View {
+        return Button(action: {a.getOperation(sign: sign)}){
+            Text(sign)
+        }
+        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
+    }
+    fileprivate func equalsButton(sign:String) -> some View {
+        return Button(action: {a.result()}){
+            Text(sign).padding(.horizontal, 88)
+        }
+        .padding(/*@START_MENU_TOKEN@*/.horizontal, 88.0/*@END_MENU_TOKEN@*/).padding(.vertical, 22.0)
+    }
+    
     var body: some View {
         
         ZStack{
@@ -21,115 +41,63 @@ struct ContentView: View {
                     Text(String(a.strNumber))
                         .font(.subheadline)
                         .fontWeight(.bold)
-                        .foregroundColor(Color.white)
+                        .foregroundColor(Color.blue)
                         .multilineTextAlignment(.trailing)
                         .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-                        .frame(width: screenWidth - 64).background(Color.gray).cornerRadius(16)
-                    
-                }
-                Spacer()
-                VStack{
-                    HStack{
-                        Button(action: {
-                            a.addDigits(typedDigit: "7");
-                            }, label: {
-                            Text("7")
-                        })
-                        .padding(.all, 22.0)
-                        Button(action: {a.addDigits(typedDigit: "8")}){
-                            Text("8")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.addDigits(typedDigit: "9")}){
-                            Text("9")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.getOperation(sign: "C")}){
-                            Text("C")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                       
-
-                    }
-                    
-                    HStack{
-                        Button(action: {a.addDigits(typedDigit: "4")}){
-                            Text("4")
-                        }
-                        .padding(.all, 22.0)
-                        Button(action: {a.addDigits(typedDigit: "5")}){
-                            Text("5")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.addDigits(typedDigit: "6")}){
-                            Text("6")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.getOperation(sign: "X")}){
-                            Text("X")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                       
-                    }
-                    
-                    HStack{
-                        Button(action: {a.addDigits(typedDigit: "1")}){
-                            Text("1")
-                        }
-                        .padding(.all, 22.0)
-                        Button(action: {a.addDigits(typedDigit: "2")}){
-                            Text("2")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.addDigits(typedDigit: "3")}){
-                            Text("3")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.getOperation(sign: "/")}){
-                            Text("/")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                       
-                    }
-                    Button(action: {a.addDigits(typedDigit: "0")}){
-                        Text("0")
-                    }
-                    HStack{
-                        Button(action: {a.addDigits(typedDigit: ".")}){
-                            Text(".")
-                        }
-                        .padding(.all, 22.0)
-                        Button(action: {a.getOperation(sign: "-")}){
-                            Text("-")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.getOperation(sign: "+")}){
-                            Text("+")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                        Button(action: {a.result()}){
-                            Text("=")
-                        }
-                        .padding(/*@START_MENU_TOKEN@*/.all, 22.0/*@END_MENU_TOKEN@*/)
-                       
-                    }
+                        .frame(width: screenWidth - 64)
+                        .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.blue, lineWidth: 2))
+                        
                     
                 }
                 
                 Spacer()
-                    .border(/*@START_MENU_TOKEN@*/Color.gray/*@END_MENU_TOKEN@*/, width: /*@START_MENU_TOKEN@*/11/*@END_MENU_TOKEN@*/)
-            }
+                VStack{
+                    HStack{
+                        digitButton(value: "7")
+                        digitButton(value: "8")
+                        digitButton(value: "9")
+                        operatorButton(sign: "C")
+                        
+                        
+                        
+                    }
+                    
+                    HStack{
+                        digitButton(value: "4")
+                        digitButton(value: "5")
+                        digitButton(value: "6")
+                        operatorButton(sign: "X")
+                        
+                    }
+                    
+                    HStack{
+                        digitButton(value: "1")
+                        digitButton(value: "2")
+                        digitButton(value: "3")
+                        operatorButton(sign: "/")
+                        
+                    }
+                    HStack{
+                        digitButton(value: "0")
+                        digitButton(value: ".")
+                        operatorButton(sign: "+")
+                        operatorButton(sign: "-")
+                    }
+                    equalsButton(sign: "=")
+                    Spacer().frame(height: 96.0)
+                }
         }
        
         
 
-
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
         ContentView()
+            .previewDevice("iPhone 8")
             
     }
 }
